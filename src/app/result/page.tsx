@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Download, Copy, ArrowLeft, Check } from "lucide-react";
+import { Download, Copy, ArrowLeft, Check, FileText } from "lucide-react";
 
 export default function ResultPage() {
   const [data, setData] = useState<any>(null);
@@ -15,8 +15,11 @@ export default function ResultPage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">No contract data found. <Link href="/create" className="text-brand-600 underline">Create one</Link></p>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="text-center">
+          <p className="text-slate-500 mb-3">No contract data found.</p>
+          <Link href="/create" className="text-sky-600 font-medium hover:underline">Create one</Link>
+        </div>
       </div>
     );
   }
@@ -73,26 +76,27 @@ This is a draft agreement. For important contracts, we recommend review by a qua
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="border-b bg-white sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-3">
+    <div className="min-h-screen bg-slate-50">
+      <header className="border-b border-slate-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
+        <div className="max-w-3xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <Link href="/create" className="text-gray-500 hover:text-gray-700">
+            <Link href="/create" className="text-slate-400 hover:text-slate-600 transition">
               <ArrowLeft className="w-5 h-5" />
             </Link>
-            <div>
-              <h1 className="font-semibold text-sm md:text-base">
+            <div className="flex items-center gap-2 min-w-0">
+              <FileText className="w-4 h-4 text-sky-600 shrink-0" />
+              <h1 className="font-medium text-sm text-slate-900 truncate">
                 {data.documentType} – {data.projectName}
               </h1>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 border border-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50">
-              {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+              className="inline-flex items-center gap-1.5 border border-slate-200 bg-white px-3 py-1.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition">
+              {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
               {copied ? "Copied" : "Copy Text"}
             </button>
-            <button className="inline-flex items-center gap-1.5 bg-brand-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-brand-700">
+            <button className="inline-flex items-center gap-1.5 bg-sky-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-sky-700 transition shadow-sm">
               <Download className="w-4 h-4" />
               Download PDF
             </button>
@@ -100,24 +104,26 @@ This is a draft agreement. For important contracts, we recommend review by a qua
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white border rounded-xl p-6 md:p-10 shadow-sm">
-          <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-gray-800">
-            {contractText}
-          </pre>
+      <main className="max-w-3xl mx-auto px-4 py-8">
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+          <div className="px-6 sm:px-10 py-8 sm:py-10">
+            <pre className="whitespace-pre-wrap font-sans text-[15px] leading-relaxed text-slate-800">
+              {contractText}
+            </pre>
+          </div>
         </div>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
+        <p className="mt-5 text-center text-xs text-slate-500">
           This is a draft agreement. For important contracts, we recommend review by a qualified attorney.
         </p>
 
-        <div className="mt-8 flex justify-center gap-4">
+        <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
           <Link href="/contracts"
-            className="border border-gray-300 px-5 py-2.5 rounded-lg font-medium hover:bg-gray-50">
+            className="inline-flex justify-center border border-slate-200 bg-white px-5 py-2.5 rounded-xl font-medium text-sm text-slate-700 hover:bg-slate-50 transition">
             Save to My Contracts
           </Link>
           <Link href="/create"
-            className="bg-brand-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-brand-700">
+            className="inline-flex justify-center bg-sky-600 text-white px-5 py-2.5 rounded-xl font-medium text-sm hover:bg-sky-700 transition shadow-sm">
             Create Another
           </Link>
         </div>
