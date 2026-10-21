@@ -11,14 +11,14 @@ export default function CreateContractPage() {
   const [form, setForm] = useState({
     role: "Full-stack Developer",
     documentType: "Project Agreement",
-    projectName: "",
+    projectName: "E-commerce Website Redesign",
     clientType: "Startup",
-    totalFee: "",
-    paymentTerms: "",
-    timeline: "",
-    revisions: "",
+    totalFee: "$8,000",
+    paymentTerms: "30% upfront, 40% at midpoint, 30% on final delivery",
+    timeline: "6–8 weeks",
+    revisions: "3 rounds of revisions",
     ipOwnership: "Ownership transferred to client upon full payment",
-    specialTerms: "",
+    specialTerms: "Rush requests outside business hours will incur additional fees. Client feedback must be provided within 48 hours.",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -28,7 +28,7 @@ export default function CreateContractPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 2500));
+    await new Promise((r) => setTimeout(r, 1500));
     sessionStorage.setItem("generatedContract", JSON.stringify(form));
     router.push("/result");
   };
@@ -48,6 +48,10 @@ export default function CreateContractPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800">
+          Example values are pre-filled for easy testing. You can edit them or just click Generate.
+        </div>
+
         <form onSubmit={handleSubmit} className="bg-white border rounded-xl p-6 md:p-8 space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
@@ -77,7 +81,6 @@ export default function CreateContractPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
             <input name="projectName" value={form.projectName} onChange={handleChange} required
-              placeholder="e.g. E-commerce Website Redesign"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
           </div>
 
@@ -95,28 +98,24 @@ export default function CreateContractPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Total Fee</label>
             <input name="totalFee" value={form.totalFee} onChange={handleChange} required
-              placeholder="e.g. $8,000"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Payment Terms</label>
             <input name="paymentTerms" value={form.paymentTerms} onChange={handleChange} required
-              placeholder="e.g. 30% upfront, 40% at midpoint, 30% on final delivery"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Timeline</label>
             <input name="timeline" value={form.timeline} onChange={handleChange} required
-              placeholder="e.g. 6–8 weeks"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Included Revisions</label>
             <input name="revisions" value={form.revisions} onChange={handleChange} required
-              placeholder="e.g. 3 rounds of revisions"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
           </div>
 
@@ -133,7 +132,6 @@ export default function CreateContractPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Special Terms (optional)</label>
             <textarea name="specialTerms" value={form.specialTerms} onChange={handleChange} rows={3}
-              placeholder="Add any extra conditions (rush fees, response time limits, etc.)"
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
           </div>
 
