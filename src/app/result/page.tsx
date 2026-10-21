@@ -2,16 +2,28 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Download, Copy, ArrowLeft, Check, FileText } from "lucide-react";
 
 export default function ResultPage() {
+  const searchParams = useSearchParams();
   const [data, setData] = useState<any>(null);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const stored = sessionStorage.getItem("generatedContract");
-    if (stored) setData(JSON.parse(stored));
-  }, []);
+    const id = searchParams.get("id");
+
+    if (id) {
+      // Load from localStorage (My Contracts)
+      const stored = JSON.parse(localStorage.getItem("contracts") || "[]");
+      const found = stored.find((c: any) => c.id === id);
+      if (found) setData(found);
+    } else {
+      // Load from sessionStorage (just generated)
+      const stored = sessionStorage.getItem("generatedContract");
+      if (stored) setData(JSON.parse(stored));
+    }
+  }, [searchParams]);
 
   if (!data) {
     return (
@@ -80,7 +92,7 @@ This is a draft agreement. For important contracts, we recommend review by a qua
       <header className="border-b border-slate-200 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <Link href="/create" className="text-slate-400 hover:text-slate-600 transition">
+            <Link href="/contracts" className="text-slate-400 hover:text-slate-600 transition">
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <div className="flex items-center gap-2 min-w-0">
@@ -120,7 +132,7 @@ This is a draft agreement. For important contracts, we recommend review by a qua
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
           <Link href="/contracts"
             className="inline-flex justify-center border border-slate-200 bg-white px-5 py-2.5 rounded-xl font-medium text-sm text-slate-700 hover:bg-slate-50 transition">
-            Save to My Contracts
+            Back to My Contracts
           </Link>
           <Link href="/create"
             className="inline-flex justify-center bg-sky-600 text-white px-5 py-2.5 rounded-xl font-medium text-sm hover:bg-sky-700 transition shadow-sm">
