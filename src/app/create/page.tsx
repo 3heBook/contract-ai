@@ -29,7 +29,22 @@ export default function CreateContractPage() {
     e.preventDefault();
     setLoading(true);
     await new Promise((r) => setTimeout(r, 1500));
-    sessionStorage.setItem("generatedContract", JSON.stringify(form));
+
+    const contract = {
+      id: Date.now().toString(),
+      ...form,
+      createdAt: new Date().toISOString(),
+      status: "Draft",
+    };
+
+    // Save to sessionStorage for result page
+    sessionStorage.setItem("generatedContract", JSON.stringify(contract));
+
+    // Save to localStorage for My Contracts
+    const existing = JSON.parse(localStorage.getItem("contracts") || "[]");
+    existing.unshift(contract);
+    localStorage.setItem("contracts", JSON.stringify(existing));
+
     router.push("/result");
   };
 
